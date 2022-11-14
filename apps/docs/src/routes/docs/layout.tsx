@@ -11,7 +11,7 @@ export default component$(() => {
     <>
       <div class="docs relative">
         <Menu class="sticky top-[5.5rem]" />
-        <article>
+        <article class="prose">
           <Slot />
         </article>
         <OnThisPage class="sticky top-[5.5rem]" />

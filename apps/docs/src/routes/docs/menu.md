@@ -1,21 +1,17 @@
-# Guide
+# Documentation
 
-## Guides
+## General
 
-- [Getting Started](getting-started/index.md)
-
-## Advanced
-
-- [Overview](advanced/index.md)
-
-## Examples
-
-- [Hello World](https://qwik.builder.io/examples/introduction/hello-world/)
-- [Tutorials](https://qwik.builder.io/tutorial/welcome/overview/)
-- [Playground](https://qwik.builder.io/playground/)
+- [Project Structure](/docs/general/project-structure)
+- [Components](/docs/general/components)
+- [Context](/docs/general/context)
+- [Hooks](/docs/general/hooks)
+- [Gotchas](/docs/general/gotchas)
+- [Customizability](/docs/general/customizability)
+- [Configuration](/docs/general/configuration)
+- [CLI](/docs/general/cli)
 
 ## Community
 
-- [@QwikDev](https://twitter.com/QwikDev)
 - [Discord](https://qwik.builder.io/chat)
-- [GitHub](https://github.com/BuilderIO/qwik)
+- [GitHub](https://github.com/BuilderIO/mitosis)

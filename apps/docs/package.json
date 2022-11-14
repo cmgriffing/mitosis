@@ -6,6 +6,7 @@
   },
   "private": true,
   "scripts": {
+    "docs:copy": "ts-node --project script.tsconfig.json ./scripts/copy-docs-markdown.ts",
     "build": "qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
@@ -24,7 +25,10 @@
   "devDependencies": {
     "@builder.io/qwik": "0.12.1",
     "@builder.io/qwik-city": "0.0.118",
+    "@tailwindcss/typography": "^0.5.8",
     "@types/eslint": "8.4.8",
+    "@types/fs-extra": "^9.0.13",
+    "@types/glob": "^8.0.0",
     "@types/node": "latest",
     "@typescript-eslint/eslint-plugin": "5.41.0",
     "@typescript-eslint/parser": "5.41.0",
@@ -35,11 +39,13 @@
     "postcss": "^8.4.16",
     "prettier": "2.7.1",
     "tailwindcss": "^3.1.8",
+    "ts-node": "^10.9.1",
     "typescript": "4.8.4",
     "vite": "3.2.1",
     "vite-tsconfig-paths": "3.5.0"
   },
   "dependencies": {
-    "clsx": "^1.2.1"
+    "clsx": "^1.2.1",
+    "prismjs": "^1.29.0"
   }
 }

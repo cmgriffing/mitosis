@@ -2,93 +2,88 @@
 title: Overview
 ---
 
-# Docs Site Overview
+# Mitosis Overview
 
-This page is wrapped by two layouts because this source file `src/routes/docs/index.md` is nested. The applied layouts are:
+Mitosis is a subset of [JSX](https://github.com/facebook/jsx). It supports generating code for a number of frontend frameworks, including React, Vue, Angular, Svelte, and Solid.
 
-- `src/routes/docs/layout.tsx`
-- `src/routes/layout.tsx`
+**Table of contents**
 
-## Left Menu
+- [How Does It Work](#how-does-it-work)
+- [Formatting options](#formatting-options)
+- [Project Structure](/docs/general/project-structure)
+- [Components](/docs/general/components)
+- [Context](/docs/general/context)
+- [Hooks](/docs/general/hooks)
+- [Gotchas](/docs/general/gotchas)
+- [Customizability](/docs/general/customizability)
+- [Configuration](/docs/general/configuration)
+- [CLI](/docs/general/cli)
 
-The left menu ordering is created with the `src/routes/docs/menu.md` markdown file.
+## How does it work
 
-## More info:
+Mitosis uses a static subset of JSX, inspired by [Solid](https://www.solidjs.com/guide#jsx-compilation). This means we can parse it to a simple JSON structure, then easily build serializers that target various frameworks and implementations.
 
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
+```tsx
+export function MyComponent() {
+  const state = useStore({
+    name: 'Steve',
+  });
 
-## More info:
+  return (
+    <div>
+      <input value={state.name} onChange={(event) => (state.name = event.target.value)} />
+    </div>
+  );
+}
+```
 
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
+becomes:
 
-## More info:
+```json
+{
+  "@type": "@builder.io/mitosis/component",
+  "state": {
+    "name": "Steve"
+  },
+  "nodes": [
+    {
+      "@type": "@builder.io/mitosis/node",
+      "name": "div",
+      "children": [
+        {
+          "@type": "@builder.io/mitosis/node",
+          "bindings": {
+            "value": "state.name",
+            "onChange": "state.name = event.target.value"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
 
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
+Which can be reserialized into many languges and frameworks. For example, to support angular, we just make a serializer that loops over the json and produces:
 
-## More info:
+```ts
+@Component({
+  template: `
+    <div>
+      <input [value]="name" (change)="name = $event.target.value" />
+    </div>
+  `,
+})
+class MyComponent {
+  name = 'Steve';
+}
+```
 
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
+Adding framework support is surprisingly easy with the plugin system (docs coming soon).
 
-## More info:
+## Formatting options
 
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
+Mitosis supports settings for generating code to match your preferred formatting, libraries, etc. These output options will be customizable and extensible with plugins soon.
 
-## More info:
+<img src="https://imgur.com/hWXfNF3.gif "/>
 
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
 
-## More info:
-
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
-
-## More info:
-
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
-
-## More info:
-
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
-
-## More info:
-
-- [Layouts](https://qwik.builder.io/qwikcity/layout/overview/)
-- [Routing](https://qwik.builder.io/qwikcity/routing/overview/)
-- [Authoring Content](https://qwik.builder.io/qwikcity/content/component/)
-- [Server Adaptors and Middleware](https://qwik.builder.io/qwikcity/adaptors/overview/)
-- [Static Site Generation (SSG)](https://qwik.builder.io/qwikcity/static-site-generation/overview/)
